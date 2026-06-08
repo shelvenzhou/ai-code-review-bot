@@ -125,9 +125,15 @@ export interface DiffHunk {
 
 /* ───────────────────────── 过滤（M3 产物） ───────────────────────── */
 
+/** filter 输出 / LLM 输入：只含文件 + patch 文本。
+ *  不在此解析 hunks——解析是 M4 的事，由 M6 用 parsePatch 升级为 ParsedUnit。 */
 export interface ReviewUnit {
   file: string;
   patch: string;
+}
+
+/** M6 内部：用 M4.parsePatch 把 ReviewUnit 解析成带 hunks 的形式（供 anchoring）。 */
+export interface ParsedUnit extends ReviewUnit {
   hunks: DiffHunk[];
 }
 

@@ -114,7 +114,8 @@ export interface PullRequestData extends PrRef {
 export interface DiffHunk { oldStart: number; oldLines: number; newStart: number; newLines: number; lines: DiffLine[]; }
 export interface DiffLine { kind: "add" | "del" | "ctx"; newLine?: number; oldLine?: number; text: string; }
 
-export interface ReviewUnit { file: string; patch: string; hunks: DiffHunk[]; }
+export interface ReviewUnit { file: string; patch: string; }          // filter 输出 / LLM 输入
+export interface ParsedUnit extends ReviewUnit { hunks: DiffHunk[]; }  // M6 用 parsePatch 升级
 export interface SkippedFile { path: string; reason: string; }
 
 // —— 配置 ——
