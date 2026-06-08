@@ -1,0 +1,29 @@
+name: AI Review (dogfood)
+
+# Dogfood：让 bot 评审本仓库自己的 PR。两层在此合一（uses: ./ 调用本仓库的 action.yml）。
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# 最小权限：读代码 + 写 PR 评论。
+permissions:
+  contents: read
+  pull-requests: write
+
+# 同一 PR 推新 commit 时取消旧运行。
+concurrency:
+  group: ai-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    # 逃生阀：打了 skip-ai-review label 就跳过。
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'skip-ai-review') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          github-token: ${{ github.token }}
+          model: gpt-4.1

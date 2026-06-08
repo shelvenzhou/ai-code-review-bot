@@ -1,0 +1,39 @@
+# 第 2 层：bot 作为可复用 GitHub Action（composite）。
+# 别人（含本仓库的 dogfood）用 `uses: <owner>/<repo>@<ref>` 或 `uses: ./` 引入。
+name: "AI Code Review"
+description: "LLM-based PR review across correctness / security / maintainability / performance."
+branding:
+  icon: "check-circle"
+  color: "purple"
+
+inputs:
+  openai-api-key:
+    description: "OpenAI API key."
+    required: true
+  github-token:
+    description: "Token with pull-requests: write (defaults to the workflow token)."
+    required: false
+    default: ${{ github.token }}
+  model:
+    description: "OpenAI model id (overrides OPENAI_MODEL)."
+    required: false
+    default: "gpt-4.1"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - name: Install deps
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: bun install --frozen-lockfile
+    - name: Run AI review
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      env:
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
+        OPENAI_MODEL: ${{ inputs.model }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: bun run src/entrypoints/action.ts

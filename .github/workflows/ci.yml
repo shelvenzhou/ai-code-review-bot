@@ -1,0 +1,27 @@
+name: CI
+
+# 第 1 层：项目自身的护栏流水线。与 ai-review.yml 并行运行、互不干扰。
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - name: Typecheck
+        run: bun run typecheck
+      - name: Lint
+        run: bun run lint
+      - name: Test
+        run: bun test
