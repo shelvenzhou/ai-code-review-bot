@@ -12,7 +12,7 @@ import { CATEGORIES, type Config, ConfigSchema } from "./contracts.ts";
 /* ───────────────────────── 默认配置 ───────────────────────── */
 
 export const DEFAULT_CONFIG: Config = {
-  model: "gpt-4.1",
+  model: "gpt-4o",
   categories: [...CATEGORIES],
   ignoreGlobs: [],
   maxFiles: 50,

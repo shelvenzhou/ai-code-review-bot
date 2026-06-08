@@ -22,7 +22,7 @@ jobs:
       - uses: <owner>/<repo>@v1          # 本仓库 dogfood 时用 `uses: ./`
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          model: gpt-4.1
+          model: gpt-4o
 ```
 
 - 需要在仓库 Secrets 里设置 `OPENAI_API_KEY`。
@@ -42,7 +42,7 @@ bun run src/entrypoints/cli.ts <owner>/<repo>#<number> [--dry-run] [--json]
 | 变量 | 作用 | 默认 |
 |---|---|---|
 | `OPENAI_API_KEY` | OpenAI 密钥（必填）| — |
-| `OPENAI_MODEL` | 模型 id | `gpt-4.1` |
+| `OPENAI_MODEL` | 模型 id | `gpt-4o` |
 | `GITHUB_TOKEN` | PR 写权限 token | — |
 | `AI_REVIEW_MAX_FILES` / `AI_REVIEW_COMMENT_LANGUAGE` / `AI_REVIEW_SKIP_LABEL` | 见 `src/core/config.ts` | — |
 

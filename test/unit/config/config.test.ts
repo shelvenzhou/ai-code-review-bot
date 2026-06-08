@@ -7,7 +7,7 @@ const NO_ENV: Record<string, string | undefined> = {};
 describe("DEFAULT_CONFIG", () => {
   test("matches the spec'd defaults exactly", () => {
     expect(DEFAULT_CONFIG).toEqual({
-      model: "gpt-4.1",
+      model: "gpt-4o",
       categories: ["correctness", "security", "maintainability", "performance"],
       ignoreGlobs: [],
       maxFiles: 50,

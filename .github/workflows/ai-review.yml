@@ -26,4 +26,4 @@ jobs:
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           github-token: ${{ github.token }}
-          model: gpt-4.1
+          model: gpt-4o
