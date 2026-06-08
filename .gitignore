@@ -7,8 +7,8 @@ coverage/
 .env
 .env.local
 
-# Claude Code local (machine-specific) settings
-.claude/settings.local.json
+# Claude Code local state (settings, agent worktrees) — machine-specific
+.claude/
 
 # OS
 .DS_Store

@@ -71,7 +71,7 @@ Wave 3  T9 evals + T10 CI/CD + 开启 dogfood
 - 禁区：保持纯函数，无 I/O
 
 **T4 — M4 diff（纯）**
-- 依赖：T0｜目标：`parsePatch(patch) → DiffHunk[]`；`anchor(line, hunks) → position | null`
+- 依赖：T0｜目标：`parsePatch(patch) → DiffHunk[]`；`isCommentable(line, hunks) → boolean`
 - 产出：`src/diff/index.ts`
 - 验收：真实 patch 样例；含边界（多 hunk、增/删/上下文、行不在 hunk → null）
 - 禁区：纯函数，无 I/O。**diff 定位是最易出错处，用例要厚**
